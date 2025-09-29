@@ -1,0 +1,5 @@
+run:
+  runtime: nodejs20
+  command: ["npm","run","start"]
+build:
+  command: "npm ci && npm run build"

@@ -1,0 +1,13 @@
+{
+  "name": "tutupapp-backend",
+  "private": true,
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "dev": "node server.js",
+    "build": "echo \"no build step\"",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
