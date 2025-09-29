@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Listado de Alumnos</title>
+</head>
+<body>
+  <h1>Alumnos</h1>
+  <ul id="lista"></ul>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCvmpJc0kctozg4zimSuivrw29nKo_7Rs",
+      authDomain: "tutupapp-11ef4.firebaseapp.com",
+      projectId: "tutupapp-11ef4",
+      storageBucket: "tutupapp-11ef4.appspot.com",
+      messagingSenderId: "45397820537",
+      appId: "1:45397820537:web:7f805975364b672a24fde",
+      measurementId: "G-W6GBM4BMCR"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    async function cargarAlumnos() {
+      const lista = document.getElementById("lista");
+      lista.innerHTML = "";
+      const snap = await getDocs(collection(db, "alumnos"));
+      snap.forEach(doc => {
+        const li = document.createElement("li");
+        const data = doc.data();
+        li.textContent = `${data.apellidos}, ${data.nombre} (${data.email})`;
+        lista.appendChild(li);
+      });
+    }
+
+    onAuthStateChanged(auth, user => {
+      if (user) cargarAlumnos();
+      else document.getElementById("lista").innerHTML = "<li>Debes iniciar sesión</li>";
+    });
+  </script>
+</body>
+</html>

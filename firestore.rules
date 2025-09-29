@@ -1,0 +1,8 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{db}/documents {
+    function isSignedIn(){ return request.auth!=null; }
+    match /reservas/{id} { allow create: if true; allow read, update, delete: if false; }
+    match /alumnos/{uid} { allow read, write: if isSignedIn() && request.auth.uid==uid; }
+  }
+}
