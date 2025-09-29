@@ -68,3 +68,4 @@ node_modules/
 # dataconnect generated files
 .dataconnect
 keys/*.json
+node_modules/
